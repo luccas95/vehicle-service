@@ -1,4 +1,4 @@
-name: CD Pipeline
+name: CD to Kubernetes
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
 jobs:
   deploy:
     name: Deploy to K8s Cluster
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
 
     steps:
       - name: Checkout repository
