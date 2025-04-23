@@ -14,16 +14,16 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Set up kubeconfig
-        shell: pwsh
-        run: $env:KUBECONFIG_CONTENT | Out-File -FilePath kubeconfig -Encoding ascii
+        shell: powershell
+        run: Set-Content -Path kubeconfig -Value $env:KUBECONFIG_CONTENT -Encoding Ascii
         env:
           KUBECONFIG_CONTENT: ${{ secrets.KUBECONFIG_CONTENT }}
           KUBECONFIG: kubeconfig
 
       - name: Create and apply Postgres Secret
-        shell: pwsh
+        shell: powershell
         run: |
-          $env:KUBECONFIG_CONTENT | Out-File -FilePath kubeconfig -Encoding ascii
+          Set-Content -Path kubeconfig -Value $env:KUBECONFIG_CONTENT -Encoding Ascii
           kubectl create secret generic postgres-secret `
             --from-literal=username=${{ secrets.POSTGRES_USERNAME }} `
             --from-literal=password=${{ secrets.POSTGRES_PASSWORD }} `
@@ -34,13 +34,13 @@ jobs:
           KUBECONFIG: kubeconfig
 
       - name: Deploy Postgres manifests
-        shell: pwsh
+        shell: powershell
         run: kubectl apply -f k8s/postgres/ --validate=false
         env:
           KUBECONFIG: kubeconfig
 
       - name: Deploy Vehicle Service manifests
-        shell: pwsh
+        shell: powershell
         run: kubectl apply -f k8s/vehicle/ --validate=false
         env:
           KUBECONFIG: kubeconfig
