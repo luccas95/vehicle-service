@@ -14,8 +14,8 @@ spec:
     spec:
       containers:
         - name: vehicle-service
-          image: vehicle-service:latest
-          imagePullPolicy: Never
+          image: luccas95/vehicle-service:latest
+          imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8081
           env:
