@@ -19,6 +19,15 @@ jobs:
           KUBECONFIG_CONTENT: ${{ secrets.KUBECONFIG_CONTENT }}
           KUBECONFIG: ${{ github.workspace }}/kubeconfig
 
+      - name: Create Postgres Secret from GitHub Secrets
+        run: |
+          kubectl create secret generic postgres-secret \
+            --from-literal=username=${{ secrets.POSTGRES_USERNAME }} \
+            --from-literal=password=${{ secrets.POSTGRES_PASSWORD }} \
+            --dry-run=client -o yaml | kubectl apply -f -
+        env:
+          KUBECONFIG: ${{ github.workspace }}/kubeconfig
+
       - name: Deploy Postgres manifests
         run: kubectl apply -f k8s/postgres/
         env:
