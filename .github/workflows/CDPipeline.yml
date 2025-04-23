@@ -18,13 +18,19 @@ jobs:
         env:
           KUBECONFIG_CONTENT: ${{ secrets.KUBECONFIG_CONTENT }}
 
-      - name: Create Postgres Secret from GitHub Secrets
+      - name: Create and apply Postgres Secret
         run: |
-          kubectl --kubeconfig=${{ github.workspace }}/kubeconfig --context=minikube create secret generic postgres-secret --from-literal=username=${{ secrets.POSTGRES_USERNAME }} --from-literal=password=${{ secrets.POSTGRES_PASSWORD }} --dry-run=client -o yaml --validate=false > postgres-secret.yaml
-          kubectl --kubeconfig=${{ github.workspace }}/kubeconfig --context=minikube apply -f postgres-secret.yaml --validate=false
+          echo "$KUBECONFIG_CONTENT" > kubeconfig
+          kubectl --kubeconfig=kubeconfig create secret generic postgres-secret \
+            --from-literal=username=${{ secrets.POSTGRES_USERNAME }} \
+            --from-literal=password=${{ secrets.POSTGRES_PASSWORD }} \
+            --dry-run=client -o yaml --validate=false \
+            | kubectl --kubeconfig=kubeconfig apply -f - --validate=false
+        env:
+          KUBECONFIG_CONTENT: ${{ secrets.KUBECONFIG_CONTENT }}
 
       - name: Deploy Postgres manifests
-        run: kubectl --kubeconfig=${{ github.workspace }}/kubeconfig --context=minikube apply -f k8s/postgres/
+        run: kubectl --kubeconfig=kubeconfig apply -f k8s/postgres/ --validate=false
 
       - name: Deploy Vehicle Service manifests
-        run: kubectl --kubeconfig=${{ github.workspace }}/kubeconfig --context=minikube apply -f k8s/vehicle/
+        run: kubectl --kubeconfig=kubeconfig apply -f k8s/vehicle/ --validate=false
