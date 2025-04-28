@@ -14,8 +14,13 @@ spec:
     spec:
       containers:
         - name: vehicle-service
+<<<<<<< HEAD
           image: ${{ secrets.DOCKER_USERNAME }}/vehicle-service:latest
           imagePullPolicy: Never
+=======
+          image: luccas95/vehicle-service:latest
+          imagePullPolicy: IfNotPresent
+>>>>>>> d0f1b4353930c3fbc64a79940064047333d23395
           ports:
             - containerPort: 8081
           env:

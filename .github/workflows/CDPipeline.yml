@@ -1,0 +1,46 @@
+name: CD Pipeline
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  deploy:
+    name: Deploy to K8s Cluster
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up kubeconfig
+        shell: powershell
+        run: Set-Content -Path kubeconfig -Value $env:KUBECONFIG_CONTENT -Encoding Ascii
+        env:
+          KUBECONFIG_CONTENT: ${{ secrets.KUBECONFIG_CONTENT }}
+          KUBECONFIG: kubeconfig
+
+      - name: Create and apply Postgres Secret
+        shell: powershell
+        run: |
+          Set-Content -Path kubeconfig -Value $env:KUBECONFIG_CONTENT -Encoding Ascii
+          kubectl create secret generic postgres-secret `
+            --from-literal=username=${{ secrets.POSTGRES_USERNAME }} `
+            --from-literal=password=${{ secrets.POSTGRES_PASSWORD }} `
+            --dry-run=client -o yaml --validate=false `
+            | kubectl apply -f - --validate=false
+        env:
+          KUBECONFIG_CONTENT: ${{ secrets.KUBECONFIG_CONTENT }}
+          KUBECONFIG: kubeconfig
+
+      - name: Deploy Postgres manifests
+        shell: powershell
+        run: kubectl apply -f k8s/postgres/ --validate=false
+        env:
+          KUBECONFIG: kubeconfig
+
+      - name: Deploy Vehicle Service manifests
+        shell: powershell
+        run: kubectl apply -f k8s/vehicle/ --validate=false
+        env:
+          KUBECONFIG: kubeconfig
