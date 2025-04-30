@@ -106,7 +106,7 @@ Para rodar os testes automatizados (se incluídos):
 ```bash
 ./gradlew test
 ```
-![Cobertura de Testes](https://github.com/luccas95/vehicle-service-subFase4/blob/main/Cobertura%20de%20Testes%20-%20vehicle-service.png)
+![Cobertura de Testes](images/Cobertura%20de%20Testes%20-%20vehicle-service.png)
 
 ## 📖 Documentação da API
 
