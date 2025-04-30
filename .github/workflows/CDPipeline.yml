@@ -20,17 +20,27 @@ jobs:
           KUBECONFIG_CONTENT: ${{ secrets.KUBECONFIG_CONTENT }}
           KUBECONFIG: kubeconfig
 
+      - name: Replace placeholders in vehicle-deployment.yaml
+        shell: powershell
+        run: |
+          (Get-Content k8s/vehicle/vehicle-deployment.yaml) `
+          -replace '\$\{\{ secrets\.DOCKER_USERNAME \}\}', '${{ secrets.DOCKER_USERNAME }}' `
+          | ForEach-Object { $_ -replace '\$\{\{ github\.sha \}\}', '${{ github.sha }}' } `
+          | Set-Content k8s/vehicle/vehicle-deployment.yaml
+        env:
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          GITHUB_SHA: ${{ github.sha }}
+          KUBECONFIG: kubeconfig
+
       - name: Create and apply Postgres Secret
         shell: powershell
         run: |
-          Set-Content -Path kubeconfig -Value $env:KUBECONFIG_CONTENT -Encoding Ascii
           kubectl create secret generic postgres-secret `
             --from-literal=username=${{ secrets.POSTGRES_USERNAME }} `
             --from-literal=password=${{ secrets.POSTGRES_PASSWORD }} `
             --dry-run=client -o yaml --validate=false `
             | kubectl apply -f - --validate=false
         env:
-          KUBECONFIG_CONTENT: ${{ secrets.KUBECONFIG_CONTENT }}
           KUBECONFIG: kubeconfig
 
       - name: Deploy Postgres manifests
@@ -42,5 +52,11 @@ jobs:
       - name: Deploy Vehicle Service manifests
         shell: powershell
         run: kubectl apply -f k8s/vehicle/ --validate=false
+        env:
+          KUBECONFIG: kubeconfig
+
+      - name: Restart Deployment
+        shell: powershell
+        run: kubectl rollout restart deployment vehicle-service
         env:
           KUBECONFIG: kubeconfig
