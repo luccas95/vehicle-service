@@ -39,7 +39,7 @@ public class VehicleController {
         return toResponse(vehicle);
     }
 
-    @GetMapping("/available")
+    @GetMapping("/veiculosDisponiveis")
     public List<VehicleResponse> listAvailableVehicles() {
         return listAvailableVehiclesUseCase.execute()
                 .stream()
@@ -47,7 +47,7 @@ public class VehicleController {
                 .collect(Collectors.toList());
     }
 
-    @GetMapping("/sold")
+    @GetMapping("/veiculosVendidos")
     public List<VehicleResponse> listSoldVehicles() {
         return listSoldVehiclesUseCase.execute()
                 .stream()
@@ -56,20 +56,20 @@ public class VehicleController {
     }
 
     // Marcar veículo como vendido
-    @PutMapping("/{id}/sell")
+    @PutMapping("/{id}/ajustarStatusVeiculoVendido")
     public VehicleResponse sellVehicle(@PathVariable Long id) {
         Vehicle vehicle = sellVehicleUseCase.execute(id);
         return toResponse(vehicle);
     }
 
     // Atualizar veículo
-    @PutMapping("/{id}")
+    @PutMapping("/{id}/atualizarVeiculo")
     public VehicleResponse update(@PathVariable Long id, @RequestBody @Valid VehicleRequest request) {
         Vehicle vehicle = updateVehicleUseCase.execute(id, request);
         return toResponse(vehicle);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/{id}/buscarVeiculoPorID")
     public ResponseEntity<VehicleResponse> findById(@PathVariable Long id) {
         Vehicle vehicle = findVehicleByIdUseCase.execute(id);
         return ResponseEntity.ok(toResponse(vehicle));
