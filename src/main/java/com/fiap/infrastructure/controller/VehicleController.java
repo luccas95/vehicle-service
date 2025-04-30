@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/vehicles")
+@RequestMapping("/veiculos")
 public class VehicleController {
 
     private final CreateVehicleUseCase createVehicleUseCase;
@@ -56,20 +56,20 @@ public class VehicleController {
     }
 
     // Marcar veículo como vendido
-    @PutMapping("/{id}/ajustarStatusVeiculoVendido")
+    @PutMapping("/ajustarStatusVeiculoVendido/{id}")
     public VehicleResponse sellVehicle(@PathVariable Long id) {
         Vehicle vehicle = sellVehicleUseCase.execute(id);
         return toResponse(vehicle);
     }
 
     // Atualizar veículo
-    @PutMapping("/{id}/atualizarVeiculo")
+    @PutMapping("/atualizarVeiculo/{id}")
     public VehicleResponse update(@PathVariable Long id, @RequestBody @Valid VehicleRequest request) {
         Vehicle vehicle = updateVehicleUseCase.execute(id, request);
         return toResponse(vehicle);
     }
 
-    @GetMapping("/{id}/buscarVeiculoPorID")
+    @GetMapping("/buscarVeiculoPorID/{id}")
     public ResponseEntity<VehicleResponse> findById(@PathVariable Long id) {
         Vehicle vehicle = findVehicleByIdUseCase.execute(id);
         return ResponseEntity.ok(toResponse(vehicle));
