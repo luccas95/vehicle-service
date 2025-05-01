@@ -36,7 +36,7 @@ jobs:
       - name: Upload JaCoCo HTML report
         uses: actions/upload-artifact@v4
         with:
-          name: jacoco-report
+          name: jacoco-report-vehicle-service
           path: build/jacocoHtml
 
       - name: Upload JaCoCo XML report (optional)
