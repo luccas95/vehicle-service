@@ -1,0 +1,429 @@
+{
+	"info": {
+		"_postman_id": "c74bab18-f20c-4cf0-a4db-f15ac7dbd4e4",
+		"name": "REFASE",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "6695097"
+	},
+	"item": [
+		{
+			"name": "vehicles",
+			"item": [
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "*/*"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"marca\": \"Nissan\",\n  \"modelo\": \"Kicks\",\n  \"ano\": 2018,\n  \"cor\": \"PRETO\",\n  \"preco\": 60000.00\n}\n// {\n//   \"marca\": \"Peugeot\",\n//   \"modelo\": \"2008\",\n//   \"ano\": 2019,\n//   \"cor\": \"BRANCO\",\n//   \"preco\": 81000.50\n// }\n// {\n//   \"marca\": \"Chevrolet\",\n//   \"modelo\": \"Celta\",\n//   \"ano\": 2001,\n//   \"cor\": \"VERMELHO\",\n//   \"preco\": 13000.00\n// }",
+							"options": {
+								"raw": {
+									"headerFamily": "json",
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl_vehicles}}/veiculos",
+							"host": [
+								"{{baseUrl_vehicles}}"
+							],
+							"path": [
+								"veiculos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "sell Vehicle",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "*/*"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl_vehicles}}/veiculos/ajustarStatusVeiculoVendido/3",
+							"host": [
+								"{{baseUrl_vehicles}}"
+							],
+							"path": [
+								"veiculos",
+								"ajustarStatusVeiculoVendido",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "buscarVeiculoPorID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "*/*"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl_vehicles}}/veiculos/buscarVeiculoPorID/2",
+							"host": [
+								"{{baseUrl_vehicles}}"
+							],
+							"path": [
+								"veiculos",
+								"buscarVeiculoPorID",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "atualizarVeiculo",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "*/*"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n        \"marca\": \"Peugeot\",\n        \"modelo\": \"2008\",\n        \"ano\": 2019,\n        \"cor\": \"BRANCO\",\n        \"preco\": 59999.5,\n        \"status\": \"DISPONIVEL\"\n    }",
+							"options": {
+								"raw": {
+									"headerFamily": "json",
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl_vehicles}}/veiculos/atualizarVeiculo/2",
+							"host": [
+								"{{baseUrl_vehicles}}"
+							],
+							"path": [
+								"veiculos",
+								"atualizarVeiculo",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "veiculosVendidos",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "*/*"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl_vehicles}}/veiculos/veiculosVendidos",
+							"host": [
+								"{{baseUrl_vehicles}}"
+							],
+							"path": [
+								"veiculos",
+								"veiculosVendidos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "veiculosDisponiveis",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "*/*"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl_vehicles}}/veiculos/veiculosDisponiveis",
+							"host": [
+								"{{baseUrl_vehicles}}"
+							],
+							"path": [
+								"veiculos",
+								"veiculosDisponiveis"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "sales",
+			"item": [
+				{
+					"name": "list",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "*/*"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl_sales}}/sales",
+							"host": [
+								"{{baseUrl_sales}}"
+							],
+							"path": [
+								"sales"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "*/*"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"vehicleId\": 1,\n  \"buyer\": \"38553207803\"\n}",
+							"options": {
+								"raw": {
+									"headerFamily": "json",
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl_sales}}/sales",
+							"host": [
+								"{{baseUrl_sales}}"
+							],
+							"path": [
+								"sales"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "concluir Venda",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "*/*"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl_sales}}/sales/2/concluir",
+							"host": [
+								"{{baseUrl_sales}}"
+							],
+							"path": [
+								"sales",
+								"2",
+								"concluir"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "cancelar Venda",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "*/*"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl_sales}}/sales/:id/cancelar",
+							"host": [
+								"{{baseUrl_sales}}"
+							],
+							"path": [
+								"sales",
+								":id",
+								"cancelar"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "<long>",
+									"description": "(Required) "
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "payments",
+			"item": [
+				{
+					"name": "simulate Webhook",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "*/*"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"paymentId\": 2,\n//   \"status\": \"APROVADO\"\n  \"status\": \"RECUSADO\"\n}",
+							"options": {
+								"raw": {
+									"headerFamily": "json",
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl_payments}}/payments/webhook",
+							"host": [
+								"{{baseUrl_payments}}"
+							],
+							"path": [
+								"payments",
+								"webhook"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"saleId\": \"4\",\n  \"amount\": \"22.5\"\n}",
+							"options": {
+								"raw": {
+									"headerFamily": "json",
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl_payments}}/payments/payments",
+							"host": [
+								"{{baseUrl_payments}}"
+							],
+							"path": [
+								"payments",
+								"payments"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl_vehicles\n",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "baseUrl_sales",
+			"value": "",
+			"type": "default"
+		},
+		{
+			"value": "",
+			"type": "default",
+			"disabled": true
+		},
+		{
+			"value": "",
+			"type": "string",
+			"disabled": true
+		},
+		{
+			"value": "",
+			"type": "default",
+			"disabled": true
+		}
+	]
+}
