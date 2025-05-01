@@ -1,4 +1,56 @@
 
+# Visão Geral do Projeto
+
+
+*Sistema de revenda digital com gestão de veículos, vendas e integração com pagamentos*
+
+Este projeto foi desenvolvido como parte do **Tech Challenge - Pós-Tech SOAT (Fase 2)**. Ele simula a transformação digital de uma empresa de revenda de veículos, oferecendo uma API robusta para gestão de produtos e vendas, além de integração com um serviço de pagamentos.
+
+## 🎯 Visão de Negócio
+
+A plataforma online permite:
+
+- ✅ **Cadastrar veículos para venda** (marca, modelo, ano, cor, preço)
+- ✏️ **Editar informações** dos veículos
+- 💰 **Efetuar a venda** de veículos, vinculando comprador e data
+- 📃 **Listar veículos disponíveis e vendidos**, ordenados por preço
+- 🔄 **Receber notificações de pagamento via webhook** com status (efetuado/cancelado)
+
+> **Objetivo**: tornar o processo de revenda mais transparente, rastreável e eficiente.
+
+---
+
+## 🧱 Visão Técnica
+
+*Separação de responsabilidades usando Clean Architecture*
+
+O projeto segue os princípios de:
+- **Clean Architecture**
+- **SOLID**
+- **Desenvolvimento orientado a microsserviços**
+
+A infraestrutura foi desenhada para execução em ambientes **Docker** e **Kubernetes**.
+
+### Inclui:
+- `Dockerfile` para cada serviço
+- `docker-compose.yml` para ambiente local
+- Manifestos Kubernetes: `Deployment`, `Service`, `ConfigMap`, `Secret`
+- Documentação de API via **Swagger/OpenAPI**
+
+---
+
+## 📦 Estrutura dos Microsserviços
+
+*Serviços independentes com integração via REST*
+
+- `vehicle-service`: Cadastro e listagem de veículos
+- `sale-service`: Venda e status da transação
+- `payment-service`: Recebimento de confirmação de pagamento e atualização da venda
+
+
+
+
+
 # Vehicle Service 🚗
 
 Microserviço responsável pelo gerenciamento de veículos na solução do Tech Challenge SOAT.
@@ -46,13 +98,20 @@ infrastructure/
 ./gradlew clean build
 ```
 
-2. Suba os containers com Docker Compose:
+2. Criar a network para que as aplicações se comuniquem entre os containers:
+
+
+```bash
+docker network create microservices-network
+```
+
+3. Suba os containers com Docker Compose:
 
 ```bash
 docker-compose up --build
 ```
 
-3. Acesse o Swagger:
+4. Acesse o Swagger:
 
 ```
 http://localhost:8081/swagger-ui/index.html
@@ -71,10 +130,8 @@ docker build -t vehicle-service:latest .
 3. Aplique os manifests do Kubernetes:
 
 ```bash
-kubectl apply -f postgres-secret.yaml
-kubectl apply -f postgres-configmap.yaml
-kubectl apply -f postgres-deployment.yaml
-kubectl apply -f vehicle-deployment.yaml
+kubectl apply -f .\k8s\postgres\
+kubectl apply -f .\k8s\vehicle\local\
 ```
 
 4. Verifique os serviços e pegue a porta NodePort:
@@ -101,7 +158,7 @@ As configurações sensíveis estão gerenciadas por **Secrets** e **ConfigMap**
 
 ## 🧪 Testes
 
-Para rodar os testes automatizados (se incluídos):
+Para rodar os testes automatizados:
 
 ```bash
 ./gradlew test
@@ -117,27 +174,6 @@ http://localhost:<NODE_PORT>/swagger-ui/index.html
 ```
 
 Principais endpoints:
-- `POST /vehicles` - Criar novo veículo
-- `PUT /vehicles/{id}` - Atualizar veículo
-- `GET /vehicles/available` - Listar veículos disponíveis
-- `GET /vehicles/sold` - Listar veículos vendidos
-- `PATCH /vehicles/{id}/sell` - Marcar veículo como vendido
+### IMG
 
-## ✅ Status do Projeto
-
-- [x] Clean Architecture implementada
-- [x] API REST documentada com Swagger
-- [x] Dockerfile e Docker Compose funcionando
-- [x] Kubernetes local funcionando com ConfigMap e Secrets
-- [x] Bean Validation e Exception Handler global configurados
-- [ ] Testes automatizados (opcional, recomendável)
-- [ ] Ingress Controller (opcional para URL amigável)
-
-## 👨‍💻 Autor
-
-**Felipe**
-
-## 📝 Licença
-
-Este projeto está sob a licença MIT. Sinta-se à vontade para usar e aprimorar!
 # vehicle-service
