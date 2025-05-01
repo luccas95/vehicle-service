@@ -24,11 +24,8 @@ jobs:
       - name: Grant execute permission to Gradle wrapper
         run: chmod +x ./gradlew
 
-      - name: Build with Gradle
-        run: ./gradlew build --no-daemon
-
-      - name: Run tests with coverage
-        run: ./gradlew test jacocoTestReport --no-daemon
+      - name: Run tests and generate coverage report
+        run: ./gradlew clean test jacocoTestReport --no-daemon
 
       - name: Upload test results
         uses: actions/upload-artifact@v4
@@ -36,11 +33,17 @@ jobs:
           name: test-results
           path: build/test-results
 
-      - name: Upload coverage report
+      - name: Upload JaCoCo HTML report
         uses: actions/upload-artifact@v4
         with:
           name: jacoco-report
           path: build/jacocoHtml
+
+      - name: Upload JaCoCo XML report (optional)
+        uses: actions/upload-artifact@v4
+        with:
+          name: jacoco-xml
+          path: build/reports/jacoco/test/jacocoTestReport.xml
 
       - name: Log in to Docker Hub
         run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
